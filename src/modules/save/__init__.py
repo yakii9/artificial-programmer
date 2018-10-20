@@ -16,7 +16,6 @@ def write_html_to_file(html, directory, url=''):
     time_stamp = datetime.datetime.now().strftime('%Y_%m_%d%H_%M_%S')
     pattern = re.compile('http://|https://')
     url = pattern.sub('', url)
-    url
     file_name = directory + url + 'T' + time_stamp + '.diggerdata'
     with open(file_name, 'wt', encoding='utf-8') as f:
         f.write(html.decode("utf-8"))
