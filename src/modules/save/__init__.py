@@ -19,6 +19,7 @@ def write_html_to_file(html, directory, url=''):
     file_name = directory + url + 'T' + time_stamp + '.diggerdata'
     with open(file_name, 'wt', encoding='utf-8') as f:
         f.write(html.decode("utf-8"))
+        f.close()
 
 
 def save(url, directory):
