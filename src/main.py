@@ -8,6 +8,5 @@ if __name__ == '__main__':
         json_str = f.read()
         base_config = json.loads(json_str)
     print('digger is working now.')
-    saver = UrlSaver(base_config['entry_url'], base_config['save_to'])
-    saver.save()
+    UrlSaver.save(base_config['entry_url'], base_config['save_to'])
     print('working complete!')

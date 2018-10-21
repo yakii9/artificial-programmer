@@ -3,23 +3,6 @@ from html.parser import HTMLParser
 from urllib import parse
 
 
-# Get domain name (example.com)
-def get_domain_name(url):
-    try:
-        results = get_sub_domain_name(url).split('.')
-        return results[-2] + '.' + results[-1]
-    except:
-        return ''
-
-
-# Get sub domain name (name.example.com)
-def get_sub_domain_name(url):
-    try:
-        return parse.urlparse(url).netloc
-    except:
-        return ''
-
-
 class ElementsFinder(HTMLParser):
 
     def __init__(self, base_url, page_url):
@@ -45,13 +28,28 @@ class ElementsFinder(HTMLParser):
 
 class UrlHelper:
 
-    def __init__(self, url):
-        self.url = url
-
-    def get_html(self):
+    @staticmethod
+    def get_html(url):
         try:
-            with urllib.request.urlopen(self.url) as response:
-                self.html = response.read()
-            return self.html
+            with urllib.request.urlopen(url) as response:
+                html = response.read()
+            return html
         except Exception as e:
             print(e)
+
+    # Get domain name (example.com)
+    @staticmethod
+    def get_domain_name(url):
+        try:
+            results = get_sub_domain_name(url).split('.')
+            return results[-2] + '.' + results[-1]
+        except:
+            return ''
+
+    # Get sub domain name (name.example.com)
+    @staticmethod
+    def get_sub_domain_name(url):
+        try:
+            return parse.urlparse(url).netloc
+        except:
+            return ''
