@@ -1,4 +1,4 @@
-from modules.save.file_saver import save
+from modules.save.url_saver import UrlSaver
 import json
 
 
@@ -8,5 +8,5 @@ if __name__ == '__main__':
         json_str = f.read()
         base_config = json.loads(json_str)
     print('digger is working now.')
-    save(base_config['entry_url'], base_config['save_to'])
+    UrlSaver.save(base_config['entry_url'], base_config['save_to'])
     print('working complete!')
