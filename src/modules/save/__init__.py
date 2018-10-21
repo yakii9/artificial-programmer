@@ -3,6 +3,9 @@ import datetime
 import re
 
 
+request_head_pattern = re.compile('http://|https://')
+
+
 def get_html(url):
     try:
         with urllib.request.urlopen(url) as response:
@@ -14,8 +17,7 @@ def get_html(url):
 
 def write_html_to_file(html, directory, url=''):
     time_stamp = datetime.datetime.now().strftime('%Y_%m_%d%H_%M_%S')
-    pattern = re.compile('http://|https://')
-    url = pattern.sub('', url)
+    url = request_head_pattern.sub('', url)
     file_name = directory + url + 'T' + time_stamp + '.diggerdata'
     with open(file_name, 'wt', encoding='utf-8') as f:
         f.write(html.decode("utf-8"))
