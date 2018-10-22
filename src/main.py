@@ -1,4 +1,5 @@
 from modules.save.url_saver import UrlSaver
+from modules.spider.crawler import WebCrawler
 import json
 
 
@@ -14,6 +15,8 @@ if __name__ == '__main__':
     entry_url = base_config['entry_url']
     directory = base_config['save_to']
 
-    UrlSaver.save(entry_url, directory)
+    crawler = WebCrawler(entry_url, 2)
+    crawler.generate_crawl_web()
+    print(crawler.get_links_web())
 
     print('working complete!')

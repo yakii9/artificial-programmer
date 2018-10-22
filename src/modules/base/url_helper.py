@@ -28,6 +28,9 @@ class ElementsFinder(HTMLParser):
 
 class UrlHelper:
 
+    def __init__(self):
+        pass
+
     @staticmethod
     def get_html(url):
         try:
@@ -37,11 +40,9 @@ class UrlHelper:
         except Exception as e:
             print(e)
 
-    # Get domain name (example.com)
-    @staticmethod
-    def get_domain_name(url):
+    def get_domain_name(self, url):
         try:
-            results = get_sub_domain_name(url).split('.')
+            results = self.get_sub_domain_name(url).split('.')
             return results[-2] + '.' + results[-1]
         except:
             return ''
