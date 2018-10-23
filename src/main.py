@@ -15,7 +15,7 @@ if __name__ == '__main__':
     entry_url = base_config['entry_url']
     directory = base_config['save_to']
 
-    crawler = WebCrawler(entry_url, 10)
+    crawler = WebCrawler(entry_url, '/Users/duanshiwen/code/github/digger/data/', 10)
     crawler.generate_crawl_web()
     print(crawler.get_links_web())
 

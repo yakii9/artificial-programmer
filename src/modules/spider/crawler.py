@@ -4,9 +4,10 @@ from modules.save.url_saver import UrlSaver
 
 class WebCrawler:
 
-    def __init__(self, entry_url, progression=10):
+    def __init__(self, entry_url, save_to, progression=10):
         self.base_url = entry_url
         self.progression = progression
+        self.save_to = save_to
         self.links_web = []
         self.url_saver = UrlSaver()
         self.url_tool = UrlHelper()
@@ -29,7 +30,7 @@ class WebCrawler:
                 html = self.url_tool.get_html(page_url).decode("utf-8")
                 finder.feed(html)
                 links = finder.page_links()
-                self.url_saver.save(page_url, '/Users/duanshiwen/code/github/digger/data/')
+                self.url_saver.save(page_url, self.save_to)
                 self.links_web[current_level].append(links)
             except Exception as e:
                 pass
