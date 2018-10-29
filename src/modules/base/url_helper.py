@@ -1,6 +1,7 @@
 import urllib.request
 from html.parser import HTMLParser
 from urllib import parse
+from modules.base.handle_timeout import timeout
 
 
 class ElementsFinder(HTMLParser):
@@ -32,6 +33,7 @@ class UrlHelper:
         pass
 
     @staticmethod
+    @timeout(6)
     def get_html(url):
         try:
             with urllib.request.urlopen(url) as response:
