@@ -6,7 +6,7 @@ class TimeoutError(Exception):
     pass
 
 
-def timeout(seconds, error_message="Timeout Error: the cmd 30s have not finished."):
+def timeout(seconds, error_message="Timeout Error: the cmd has overflowed the time limits, and has not finished."):
     def decorated(func):
         result = ""
 
