@@ -14,7 +14,6 @@ def timeout(timeout_in_seconds):
                 except Exception as e:
                     res[0] = e
             t = Thread(target=newFunc)
-            t.daemon = True
             try:
                 t.start()
                 t.join(timeout_in_seconds)
