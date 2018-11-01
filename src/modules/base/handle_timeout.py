@@ -1,33 +1,29 @@
-import signal
+from threading import Thread
 import functools
 
 
-class TimeoutError(Exception):
-    pass
-
-
-def timeout(seconds, error_message="Timeout Error: the cmd has overflowed the time limits, and has not finished."):
-    def decorated(func):
-        result = ""
-
-        def _handle_timeout(signum, frame):
-            global result
-            result = error_message
-            raise TimeoutError(error_message)
-
+def timeout(timeout_in_seconds):
+    def deco(func):
+        @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            global result
-            signal.signal(signal.SIGALRM, _handle_timeout)
+            res = [Exception('function [%s] timeout [%s seconds] exceeded!' % (func.__name__, timeout_in_seconds))]
 
-            signal.alarm(seconds)
-
+            def newFunc():
+                try:
+                    res[0] = func(*args, **kwargs)
+                except Exception as e:
+                    res[0] = e
+            t = Thread(target=newFunc)
+            t.daemon = True
             try:
-                result = func(*args, **kwargs)
-            finally:
-                signal.alarm(0)
-                return result
-            return result
-
-        return functools.wraps(func)(wrapper)
-
-    return decorated
+                t.start()
+                t.join(timeout_in_seconds)
+            except Exception as je:
+                print('error starting thread')
+                raise je
+            ret = res[0]
+            if isinstance(ret, BaseException):
+                pass
+            return ret
+        return wrapper
+    return deco
